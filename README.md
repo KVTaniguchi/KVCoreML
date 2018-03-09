@@ -20,4 +20,7 @@
     <a href="https://swift.org">
         <img src="http://img.shields.io/badge/swift-3.1-brightgreen.svg" alt="Swift 3.1">
     </a>
+    <body>
+        The purpose of this project is to create a service for getting image and string classifications using CoreML models on the server vs. putting these memory expensive models on device.
+    </body>
 </center>
