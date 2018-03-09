@@ -2,6 +2,8 @@ import Vapor
 import FluentProvider
 import HTTP
 
+
+// this is an example model for social media posts , will leave it in for now for reference
 final class Post: Model {
     let storage = Storage()
     
