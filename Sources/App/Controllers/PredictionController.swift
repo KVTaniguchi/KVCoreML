@@ -8,6 +8,7 @@ struct PredictionController {
         predictionGroup.get(handler: allPredictions)
         predictionGroup.post("create", handler: createPrediction)
         predictionGroup.get(Prediction.parameter, handler: getPrediction)
+        predictionGroup.get(Prediction.parameter, "classifications", handler: getPredictionClassifications)
     }
     
     func createPrediction(_ req: Request) throws -> ResponseRepresentable {
@@ -28,5 +29,10 @@ struct PredictionController {
     func getPrediction(_ req: Request) throws -> ResponseRepresentable {
         let prediction = try req.parameters.next(Prediction.self)
         return prediction
+    }
+    
+    func getPredictionClassifications(_ req: Request) throws -> ResponseRepresentable {
+        let prediction = try req.parameters.next(Prediction.self)
+        return try prediction.imageClassifications.all().makeJSON()
     }
 }

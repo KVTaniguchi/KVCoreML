@@ -52,3 +52,9 @@ extension Prediction: JSONConvertible {
 
 extension Prediction: ResponseRepresentable {}
 
+extension Prediction {
+    var imageClassifications: Children<Prediction, ImageClassification> {
+        return children()
+    }
+}
+
