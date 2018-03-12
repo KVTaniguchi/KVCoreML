@@ -11,6 +11,7 @@ struct ClassificationContoller {
         classificationGroup.get(handler: allClassifications)
         classificationGroup.post("create", handler: createClassification)
         classificationGroup.get(ImageClassification.parameter, handler: getClassification)
+        classificationGroup.get(ImageClassification.parameter, "prediction", handler: getClassificationPrediction)
     }
     
     func createClassification(_ req: Request) throws -> ResponseRepresentable {
@@ -32,8 +33,19 @@ struct ClassificationContoller {
         let classification = try req.parameters.next(ImageClassification.self)
         return classification
     }
+    
+    func getClassificationPrediction(_ req: Request) throws -> ResponseRepresentable {
+        let classification = try req.parameters.next(ImageClassification.self)
+        guard let prediction = try classification.prediction.get() else {
+            throw RequestError.cantFindPrediction
+        }
+        
+        return prediction
+    }
 }
 
 enum RequestError: Error {
     case badJSON
+    case cantFindPermission
+    case cantFindPrediction
 }
