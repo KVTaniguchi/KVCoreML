@@ -22,11 +22,4 @@ struct ClassificationContoller {
     }
 }
 
-extension Droplet {
-    func setUpRoutes() throws {
-        let classificationController = ClassificationContoller()
-        classificationController.addRoutes(to: self)
-    }
-}
-
 
