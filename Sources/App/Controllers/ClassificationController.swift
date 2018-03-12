@@ -13,7 +13,7 @@ struct ClassificationContoller {
     
     func createClassification(_ req: Request) throws -> ResponseRepresentable {
         guard let json = req.json else {
-            throw Abort.badRequest
+            throw RequestError.badJSON
         }
         
         let classification = try ImageClassification(json: json)
@@ -22,4 +22,6 @@ struct ClassificationContoller {
     }
 }
 
-
+enum RequestError: Error {
+    case badJSON
+}
