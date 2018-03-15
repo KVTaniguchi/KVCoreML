@@ -20,5 +20,7 @@ extension Config {
     private func setupPreparations() throws {
         preparations.append(Prediction.self)
         preparations.append(ImageClassification.self)
+        preparations.append(KVText.self)
+        preparations.append(Pivot<ImageClassification, KVText>.self)
     }
 }

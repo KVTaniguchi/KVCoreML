@@ -69,6 +69,12 @@ extension ImageClassification {
     var prediction: Parent<ImageClassification, Prediction> {
         return parent(id: predictionID)
     }
+    
+    var categories: Siblings<ImageClassification, KVText, Pivot<ImageClassification, KVText>> {
+        return siblings()
+    }
 }
+
+
 
 
