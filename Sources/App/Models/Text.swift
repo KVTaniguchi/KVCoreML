@@ -54,7 +54,7 @@ extension KVText: JSONConvertible {
 extension KVText: ResponseRepresentable {}
 
 extension KVText {
-    var categories: Siblings<KVText, ImageClassification, Pivot<KVText, ImageClassification>> {
+    var imageClassificationSiblings: Siblings<KVText, ImageClassification, Pivot<KVText, ImageClassification>> {
         return siblings()
     }
 }

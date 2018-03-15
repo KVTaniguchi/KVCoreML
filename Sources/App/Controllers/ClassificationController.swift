@@ -12,6 +12,7 @@ struct ClassificationContoller {
         classificationGroup.post("create", handler: createClassification)
         classificationGroup.get(ImageClassification.parameter, handler: getClassification)
         classificationGroup.get(ImageClassification.parameter, "prediction", handler: getClassificationPrediction)
+        classificationGroup.get(ImageClassification.parameter, "texts", handler: getClassificationKVTexts)
     }
     
     func createClassification(_ req: Request) throws -> ResponseRepresentable {
@@ -21,6 +22,15 @@ struct ClassificationContoller {
         
         let classification = try ImageClassification(json: json)
         try classification.save()
+        
+        if let texts = json["texts"]?.array {
+            for textJSON in texts {
+                if let text = try KVText.find(textJSON["id"]) {
+                    try classification.kvTexts.add(text)
+                }
+            }
+        }
+        
         return classification
     }
     
@@ -41,6 +51,11 @@ struct ClassificationContoller {
         }
         
         return prediction
+    }
+    
+    func getClassificationKVTexts(_ req: Request) throws -> ResponseRepresentable {
+        let classification = try req.parameters.next(ImageClassification.self)
+        return try classification.kvTexts.all().makeJSON()
     }
 }
 
