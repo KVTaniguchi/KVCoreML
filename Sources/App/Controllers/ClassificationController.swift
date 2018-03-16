@@ -4,7 +4,6 @@
 
 import Vapor
 import FluentProvider
-import CoreVideo
 
 // the controller for coreMLing would not save, would have a /classify path
 
