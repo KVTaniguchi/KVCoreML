@@ -5,14 +5,60 @@
 import Vapor
 import FluentProvider
 
+// the controller for coreMLing would not save, would have a /classify path
+
+// todo - redo the relationships
+// a prediction is a sibling or child of the image classification
+// add a prediction model child or sibling to the image classification
+// classify will
+
+struct ImageProcessController {
+    func addRoutes(to drop: Droplet) {
+        let processGroup = drop.grouped("api", "imageProcess")
+        processGroup.post("process", handler: classify)
+    }
+    
+    func classify(_ req: Request) throws -> ResponseRepresentable {
+        guard let json = req.json else {
+            throw RequestError.badJSON
+        }
+        
+        let classification = try ImageProcess(json: json)
+        
+        // do core ml work
+        // create sibling model prediction??
+        // return data in the response
+        
+        return classification
+    }
+}
+
+
 struct ClassificationContoller {
     func addRoutes(to drop: Droplet) {
         let classificationGroup = drop.grouped("api", "classifications")
         classificationGroup.get(handler: allClassifications)
         classificationGroup.post("create", handler: createClassification)
+        
+        classificationGroup.post("classify", handler: classify)
+        
         classificationGroup.get(ImageClassification.parameter, handler: getClassification)
         classificationGroup.get(ImageClassification.parameter, "prediction", handler: getClassificationPrediction)
         classificationGroup.get(ImageClassification.parameter, "texts", handler: getClassificationKVTexts)
+    }
+    
+    func classify(_ req: Request) throws -> ResponseRepresentable {
+        guard let json = req.json else {
+            throw RequestError.badJSON
+        }
+        
+        let classification = try ImageClassification(json: json)
+        
+        // do core ml work
+        // create sibling model prediction??
+        // return data in the response
+        
+        return classification
     }
     
     func createClassification(_ req: Request) throws -> ResponseRepresentable {
