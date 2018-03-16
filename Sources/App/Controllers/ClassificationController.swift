@@ -4,6 +4,7 @@
 
 import Vapor
 import FluentProvider
+import CoreVideo
 
 // the controller for coreMLing would not save, would have a /classify path
 
@@ -24,6 +25,10 @@ struct ImageProcessController {
         }
         
         let classification = try ImageProcess(json: json)
+        
+        
+        let imageData = classification.imageData
+        
         
         // do core ml work
         // create sibling model prediction??
